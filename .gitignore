@@ -1,4 +1,5 @@
 *~
 ssl/*
+!ssl/.gitignore
 httpd/log
 postgres/data
