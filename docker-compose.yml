@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  webserver:
+    image: httpd:2.4
+    restart: always
+    volumes:
+      - ${HTTPD_DOCS:-./httpd/htdocs}:/usr/local/apache2/htdocs
+      - ${SSL_CERTS:-./ssl/}:/etc/httpd/keys/
+      - ${HTTPD_CONF:-./httpd/conf}/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ${HTTPD_LOGS:-./httpd/log}:/usr/local/apache2/logs
+    ports:
+      - "${HTTP_PORT:-14080}:80"
+      - "${HTTPS_PORT:-14443}:443"
+
+  petstore:
+    image: polarspace/petstore:1.0.2
+    container_name: petstore
+    ports:
+      - 9999:9999
+    restart: "no"
+    volumes:
+      - ${PETSTORE_YAML:-./petstore/application.yaml}:/workspace/config/application.yaml
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    ports: 
+      - ${POSTGRES_PORT:-25432}:5432
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-petstoredb}
+      POSTGRES_USER: ${POSTGRES_USER:-petuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-petpass}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ${POSTGRES_DATA:-./postgres/data}:/var/lib/postgresql/data

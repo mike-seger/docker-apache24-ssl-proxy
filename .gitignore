@@ -1,0 +1,4 @@
+*~
+ssl/*
+httpd/log
+postgres/data
