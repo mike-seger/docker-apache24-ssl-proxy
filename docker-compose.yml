@@ -13,7 +13,7 @@ services:
       - "${HTTPS_PORT:-14443}:443"
 
   petstore:
-    image: polarspace/petstore:1.0.2
+    image: polarspace/petstore:1.0.3
     container_name: petstore
     ports:
       - 9999:9999
