@@ -33,3 +33,12 @@ services:
       PGDATA: /var/lib/postgresql/data
     volumes:
       - ${POSTGRES_DATA:-./postgres/data}:/var/lib/postgresql/data
+
+  web-socket-test:
+    # https://hub.docker.com/r/ksdn117/web-socket-test/dockerfile
+    # https://github.com/sashimi3/web-socket-test
+    image: ksdn117/web-socket-test:latest
+    container_name: wstest
+    ports: 
+      - ${WSTEST_PORT:-8010}:8010
+    
